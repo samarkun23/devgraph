@@ -1,11 +1,16 @@
 import "dotenv/config";
 import { buildApp } from "./app.js";
+import cors from "@fastify/cors";
 
 const app = buildApp();
 
 const start = async () => {
     try {
         const port = Number(process.env.PORT) || 5000;
+
+        await app.register(cors, {
+            origin: "http://localhost:3000",
+        });
 
         await app.listen({
             port,
